@@ -24,17 +24,27 @@
       --text:         #3C3A34;
       --muted:        #5F5E5A;
       --white:        #FFFFFF;
+      --page-width:   1200px;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-      background: var(--cream);
+      background: #ECEAE4;
       color: var(--charcoal);
       font-size: 18px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PAGE SHELL — centres everything at 1200px ── */
+    .page-shell {
+      max-width: var(--page-width);
+      margin: 0 auto;
+      background: var(--cream);
+      box-shadow: 0 0 40px rgba(0,0,0,0.12);
+      min-height: 100vh;
     }
 
     /* ── TOP BAR ── */
@@ -44,21 +54,28 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 40px;
+      padding: 9px 40px;
       font-size: 14px;
       letter-spacing: 0.04em;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 4px;
     }
 
-    /* ── HEADER ── */
+    /* ── SITE HEADER ── */
     .site-header {
       background: var(--white);
       border-bottom: 2px solid var(--border);
-      padding: 24px 40px;
+      padding: 22px 40px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
 
     .logo-mark {
@@ -94,6 +111,29 @@
       text-transform: uppercase;
     }
 
+    /* Hamburger button — hidden on desktop */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--charcoal);
+      border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
     /* ── NAV ── */
     nav {
       background: var(--green-dark);
@@ -103,15 +143,16 @@
       display: flex;
       flex-wrap: wrap;
       padding: 0 32px;
+      margin: 0;
     }
     nav ul li a,
     nav ul li button {
       display: block;
-      color: #FFFFFF;
+      color: #FFFFFF !important;
       font-family: 'Source Serif 4', Georgia, serif;
       font-size: 17px;
       font-weight: 700;
-      padding: 16px 20px;
+      padding: 15px 18px;
       text-decoration: none;
       background: transparent;
       border: none;
@@ -124,7 +165,7 @@
     }
     nav ul li a:hover,
     nav ul li button:hover {
-      background: rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.15);
       border-bottom-color: var(--green-lime);
     }
     nav ul li a.active {
@@ -134,7 +175,7 @@
     .nav-badge {
       display: inline-block;
       background: var(--green-lime);
-      color: #173404;
+      color: #173404 !important;
       font-size: 11px;
       font-weight: 800;
       padding: 2px 7px;
@@ -145,10 +186,13 @@
       vertical-align: middle;
     }
 
+    /* Mobile nav hidden by default when hamburger is shown */
+    nav.mobile-hidden { display: none; }
+
     /* ── HERO ── */
     .hero {
       position: relative;
-      height: 380px;
+      height: 400px;
       background-color: var(--charcoal);
       background-image: url('town-country-bridge-East-End.jpg');
       background-size: cover;
@@ -160,18 +204,18 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(20,18,12,0.88) 0%, rgba(20,18,12,0.25) 55%, transparent 100%);
+      background: linear-gradient(to top, rgba(20,18,12,0.90) 0%, rgba(20,18,12,0.22) 55%, transparent 100%);
     }
     .hero-content {
       position: relative;
       z-index: 2;
-      padding: 40px;
+      padding: 44px 48px;
       color: var(--white);
-      max-width: 800px;
+      max-width: 780px;
     }
     .hero-content h1 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 38px;
+      font-size: 40px;
       font-weight: 600;
       line-height: 1.2;
       color: var(--white);
@@ -189,6 +233,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .quick-btn {
       background: var(--white);
@@ -202,13 +247,13 @@
       align-items: center;
       gap: 16px;
       transition: background 0.15s;
-      text-decoration: none;
+      width: 100%;
     }
     .quick-btn:last-child { border-right: none; }
     .quick-btn:hover { background: var(--cream); }
     .quick-icon {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -216,20 +261,19 @@
       flex-shrink: 0;
       font-size: 22px;
     }
-    .quick-icon.green { background: var(--green-light); color: var(--green-mid); }
-    .quick-icon.amber { background: #FAEEDA; color: #854F0B; }
-    .quick-icon.blue  { background: #E6F1FB; color: #185FA5; }
+    .quick-icon.green { background: var(--green-light); }
+    .quick-icon.amber { background: #FAEEDA; }
+    .quick-icon.blue  { background: #E6F1FB; }
     .quick-label { font-size: 16px; font-weight: 600; color: var(--charcoal); display: block; margin-bottom: 2px; line-height: 1.2; }
     .quick-sub   { font-size: 13px; color: var(--muted); display: block; }
 
     /* ── MAIN LAYOUT ── */
     .main-wrap {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 48px 40px;
+      padding: 52px 48px;
       display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 40px;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
+      align-items: start;
     }
 
     /* ── CONTENT ── */
@@ -243,7 +287,7 @@
     }
     .section-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 28px;
+      font-size: 29px;
       font-weight: 600;
       color: var(--charcoal);
       line-height: 1.25;
@@ -254,11 +298,11 @@
       height: 3px;
       background: var(--green-mid);
       border-radius: 2px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
     .body-text {
       font-size: 17px;
-      line-height: 1.8;
+      line-height: 1.85;
       color: var(--text);
       margin-bottom: 18px;
     }
@@ -278,12 +322,9 @@
     }
     .read-more:hover { text-decoration: underline; }
     .read-more::after { content: ' →'; }
-
-    .content-section { margin-top: 44px; }
+    .content-section { margin-top: 48px; }
 
     /* ── SIDEBAR ── */
-    .sidebar {}
-
     .card {
       background: var(--white);
       border: 1px solid var(--border-light);
@@ -293,14 +334,11 @@
     }
     .card-header {
       background: var(--green-dark);
-      color: var(--white);
+      color: #FFFFFF;
       padding: 14px 20px;
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 17px;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 9px;
     }
     .card-body { padding: 16px 20px; }
 
@@ -326,7 +364,7 @@
       text-transform: uppercase;
     }
     .meeting-info { font-size: 15px; color: var(--text); line-height: 1.45; }
-    .meeting-info strong { display: block; color: var(--charcoal); margin-bottom: 1px; }
+    .meeting-info strong { display: block; color: var(--charcoal); margin-bottom: 2px; }
 
     .announce-item {
       display: flex;
@@ -350,7 +388,7 @@
 
     .email-input {
       width: 100%;
-      padding: 10px 14px;
+      padding: 11px 14px;
       font-family: 'Source Serif 4', Georgia, serif;
       font-size: 16px;
       border: 1px solid var(--border);
@@ -359,14 +397,12 @@
       color: var(--charcoal);
       background: var(--cream);
     }
-    .email-input:focus {
-      outline: none;
-      border-color: var(--green-mid);
-    }
+    .email-input:focus { outline: none; border-color: var(--green-mid); }
+
     .btn-green {
       width: 100%;
       background: var(--green-dark);
-      color: var(--white);
+      color: #FFFFFF;
       border: none;
       border-radius: 4px;
       padding: 13px 20px;
@@ -384,7 +420,7 @@
       background: var(--cream-mid);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      padding: 32px 40px;
+      padding: 34px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -393,42 +429,40 @@
     }
     .cta-banner h2 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 23px;
+      font-size: 24px;
       font-weight: 600;
       color: var(--charcoal);
       margin-bottom: 4px;
     }
     .cta-banner p { font-size: 16px; color: var(--muted); }
-    .btn-green-inline {
+    .btn-cta {
       background: var(--green-dark);
-      color: var(--white);
+      color: #FFFFFF;
       border: none;
       border-radius: 4px;
-      padding: 15px 32px;
+      padding: 16px 34px;
       font-family: 'Source Serif 4', Georgia, serif;
       font-size: 17px;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
-      text-decoration: none;
-      display: inline-block;
       transition: background 0.15s;
       -webkit-font-smoothing: antialiased;
+      flex-shrink: 0;
     }
-    .btn-green-inline:hover { background: #173404; }
+    .btn-cta:hover { background: #173404; }
 
     /* ── FOOTER ── */
     footer {
       background: var(--charcoal);
       color: #B4B2A9;
-      padding: 44px 40px 28px;
+      padding: 48px 48px 28px;
     }
     .footer-grid {
-      max-width: 1140px;
-      margin: 0 auto 32px;
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
-      gap: 40px;
+      gap: 48px;
+      margin-bottom: 36px;
     }
     footer h3 {
       font-family: 'Playfair Display', Georgia, serif;
@@ -437,24 +471,10 @@
       font-weight: 600;
       margin-bottom: 14px;
     }
-    footer p {
-      font-size: 15px;
-      color: #888780;
-      line-height: 1.7;
-      margin-bottom: 6px;
-    }
-    footer a {
-      font-size: 15px;
-      color: #888780;
-      line-height: 1.7;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 5px;
-    }
+    footer p { font-size: 15px; color: #888780; line-height: 1.7; margin-bottom: 6px; }
+    footer a { font-size: 15px; color: #888780; line-height: 1.8; text-decoration: none; display: block; }
     footer a:hover { color: #C8BFA8; }
     .footer-bottom {
-      max-width: 1140px;
-      margin: 0 auto;
       border-top: 1px solid #3C3A34;
       padding-top: 22px;
       font-size: 13px;
@@ -462,13 +482,13 @@
       text-align: center;
     }
 
-    /* ── PLACEHOLDER PAGE OVERLAY ── */
+    /* ── PLACEHOLDER OVERLAY ── */
     .page-overlay {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(20,18,12,0.75);
-      z-index: 100;
+      z-index: 200;
       align-items: center;
       justify-content: center;
     }
@@ -481,85 +501,142 @@
       width: 90%;
       text-align: center;
     }
-    .overlay-box .icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
+    .overlay-icon { font-size: 48px; margin-bottom: 16px; }
     .overlay-box h2 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 10px;
+      font-size: 24px; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 10px;
     }
-    .overlay-box p {
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 24px;
-    }
+    .overlay-box p { font-size: 16px; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
     .overlay-close {
-      background: var(--green-dark);
-      color: var(--white);
-      border: none;
-      border-radius: 4px;
+      background: var(--green-dark); color: #FFFFFF;
+      border: none; border-radius: 4px;
       padding: 12px 32px;
       font-family: 'Source Serif 4', Georgia, serif;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.15s;
-      -webkit-font-smoothing: antialiased;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: background 0.15s; -webkit-font-smoothing: antialiased;
     }
     .overlay-close:hover { background: #173404; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
+    /* ════════════════════════════════
+       RESPONSIVE BREAKPOINTS
+    ════════════════════════════════ */
+
+    /* Tablet — 900px */
+    @media (max-width: 960px) {
+      .topbar { padding: 9px 24px; }
+      .site-header { padding: 18px 24px; }
+
+      /* Show hamburger, hide nav by default */
+      .hamburger { display: flex; }
+      nav { display: none; }
+      nav.open { display: block; }
+      nav ul {
+        flex-direction: column;
+        padding: 0;
+      }
+      nav ul li { border-bottom: 1px solid rgba(255,255,255,0.1); }
+      nav ul li a,
+      nav ul li button {
+        padding: 16px 24px;
+        font-size: 18px;
+        border-bottom: none;
+        width: 100%;
+        text-align: left;
+      }
+
+      .hero { height: 320px; }
+      .hero-content { padding: 28px 32px; }
+      .hero-content h1 { font-size: 30px; }
+      .hero-content p { font-size: 17px; }
+
+      .quick-links { grid-template-columns: repeat(3, 1fr); }
+
       .main-wrap {
         grid-template-columns: 1fr;
-        padding: 32px 24px;
+        padding: 36px 32px;
+        gap: 36px;
       }
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .hero-content h1 { font-size: 28px; }
+
+      .cta-banner { padding: 28px 32px; }
+      footer { padding: 36px 32px 24px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     }
 
-    @media (max-width: 640px) {
-      .topbar { padding: 10px 20px; font-size: 13px; }
-      .site-header { padding: 18px 20px; }
-      nav ul { padding: 0 12px; }
-      nav ul li a, nav ul li button { font-size: 15px; padding: 13px 12px; }
-      .hero { height: 280px; }
-      .hero-content { padding: 24px; }
+    /* Mobile — 600px */
+    @media (max-width: 600px) {
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 18px;
+        font-size: 13px;
+        gap: 2px;
+      }
+
+      .site-header { padding: 16px 18px; }
+      .org-name { font-size: 19px; }
+      .logo-mark { width: 52px; height: 52px; }
+      .logo-mark span { font-size: 19px; }
+
+      .hero { height: 260px; }
+      .hero-content { padding: 20px 18px; }
       .hero-content h1 { font-size: 24px; }
-      .quick-links { grid-template-columns: 1fr; }
-      .quick-btn { border-right: none; border-bottom: 1px solid var(--border); }
-      .cta-banner { padding: 24px 20px; }
-      footer { padding: 32px 20px 20px; }
+      .hero-content p { font-size: 15px; }
+
+      .quick-links {
+        grid-template-columns: 1fr;
+      }
+      .quick-btn {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .quick-btn:last-child { border-bottom: none; }
+
+      .main-wrap { padding: 28px 18px; gap: 28px; }
+      .section-title { font-size: 24px; }
+      .body-text { font-size: 16px; }
+
+      .cta-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px 18px;
+        gap: 18px;
+      }
+      .btn-cta { width: 100%; text-align: center; padding: 15px 20px; }
+
+      footer { padding: 32px 18px 20px; }
       .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+
+      .overlay-box { padding: 32px 24px; }
     }
   </style>
 </head>
 <body>
 
+<div class="page-shell">
+
   <!-- TOP BAR -->
   <div class="topbar">
     <span>Town 'N Country Park, Hillsborough County, FL</span>
-    <span>Established 1961 &nbsp;·&nbsp; Serving Our Neighbors for Over 60 Years</span>
+    <span>Established 1961 &nbsp;&middot;&nbsp; Serving Our Neighbors for Over 60 Years</span>
   </div>
 
-  <!-- HEADER -->
+  <!-- SITE HEADER -->
   <header class="site-header">
-    <div class="logo-mark"><span>TNC</span></div>
-    <div>
-      <div class="org-name">Town 'N Country Park Civic Association</div>
-      <div class="org-sub">Local Neighborhood Association &mdash; Est. 1961</div>
+    <div class="header-left">
+      <div class="logo-mark"><span>TNC</span></div>
+      <div>
+        <div class="org-name">Town 'N Country Park Civic Association</div>
+        <div class="org-sub">Local Neighborhood Association &mdash; Est. 1961</div>
+      </div>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <!-- NAV -->
-  <nav aria-label="Main navigation">
+  <nav aria-label="Main navigation" id="main-nav">
     <ul>
       <li><a href="#" class="active" aria-current="page">Home</a></li>
       <li><button onclick="showPage('Meeting Schedule')">Meeting Schedule <span class="nav-badge">Soon</span></button></li>
@@ -604,7 +681,7 @@
     </button>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <div class="main-wrap">
     <main>
       <p class="section-label">Our History</p>
@@ -629,12 +706,9 @@
     </main>
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
-
+    <aside>
       <div class="card">
-        <div class="card-header">
-          &#128197;&nbsp; Upcoming Meetings
-        </div>
+        <div class="card-header">&#128197;&nbsp; Upcoming Meetings</div>
         <div class="card-body">
           <div class="meeting-item">
             <div class="meeting-date">Jul<br>10</div>
@@ -655,9 +729,7 @@
       </div>
 
       <div class="card">
-        <div class="card-header">
-          &#128240;&nbsp; Recent Announcements
-        </div>
+        <div class="card-header">&#128240;&nbsp; Recent Announcements</div>
         <div class="card-body">
           <div class="announce-item">
             <div class="dot"></div>
@@ -678,17 +750,14 @@
       </div>
 
       <div class="card">
-        <div class="card-header">
-          &#9993;&nbsp; Stay Informed
-        </div>
+        <div class="card-header">&#9993;&nbsp; Stay Informed</div>
         <div class="card-body">
-          <p style="font-size:15px;color:#3C3A34;line-height:1.6;margin-bottom:14px;">Get meeting notices and neighborhood updates delivered to your inbox.</p>
-          <label for="email-input" style="display:none;">Email address</label>
+          <p style="font-size:15px;color:#3C3A34;line-height:1.65;margin-bottom:14px;">Get meeting notices and neighborhood updates delivered to your inbox.</p>
+          <label for="email-input" style="position:absolute;opacity:0;pointer-events:none;">Email address</label>
           <input type="email" id="email-input" class="email-input" placeholder="Your email address">
           <button class="btn-green" onclick="handleSubscribe()">Subscribe to Updates</button>
         </div>
       </div>
-
     </aside>
   </div>
 
@@ -698,7 +767,7 @@
       <h2>Have a neighborhood concern?</h2>
       <p>Bring it to our next public meeting &mdash; every resident has a voice.</p>
     </div>
-    <button class="btn-green-inline" onclick="showPage('Meeting Schedule')">View Meeting Schedule</button>
+    <button class="btn-cta" onclick="showPage('Meeting Schedule')">View Meeting Schedule</button>
   </div>
 
   <!-- FOOTER -->
@@ -712,17 +781,17 @@
       <div>
         <h3>Quick Links</h3>
         <a href="#">Home</a>
-        <a href="#" onclick="showPage('Meeting Schedule'); return false;">Meeting Schedule</a>
-        <a href="#" onclick="showPage('Zoning Requests'); return false;">Zoning Requests</a>
-        <a href="#" onclick="showPage('County Announcements'); return false;">County Announcements</a>
-        <a href="#" onclick="showPage('What\'s Happening'); return false;">What's Happening</a>
-        <a href="#" onclick="showPage('Local Organizations'); return false;">Local Organizations</a>
+        <a href="#" onclick="showPage('Meeting Schedule');return false;">Meeting Schedule</a>
+        <a href="#" onclick="showPage('Zoning Requests');return false;">Zoning Requests</a>
+        <a href="#" onclick="showPage('County Announcements');return false;">County Announcements</a>
+        <a href="#" onclick="showPage('What\'s Happening');return false;">What's Happening</a>
+        <a href="#" onclick="showPage('Local Organizations');return false;">Local Organizations</a>
       </div>
       <div>
         <h3>Contact</h3>
         <p>info@tnccivic.org</p>
         <p>Town 'N Country Park<br>Hillsborough County, FL 33615</p>
-        <p style="margin-top:10px;"><a href="https://www.tnccivic.org" style="color:#888780;">tnccivic.org</a></p>
+        <p style="margin-top:10px;"><a href="https://www.tnccivic.org">tnccivic.org</a></p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -730,50 +799,59 @@
     </div>
   </footer>
 
-  <!-- PLACEHOLDER PAGE OVERLAY -->
-  <div class="page-overlay" id="pageOverlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
-    <div class="overlay-box">
-      <div class="icon">&#127959;</div>
-      <h2 id="overlayTitle">Page Coming Soon</h2>
-      <p id="overlayMessage">This page is under construction and will be available soon.</p>
-      <button class="overlay-close" onclick="closePage()">Close</button>
-    </div>
+</div><!-- /page-shell -->
+
+<!-- PLACEHOLDER OVERLAY -->
+<div class="page-overlay" id="pageOverlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+  <div class="overlay-box">
+    <div class="overlay-icon">&#127959;</div>
+    <h2 id="overlayTitle">Page Coming Soon</h2>
+    <p id="overlayMessage">This page is under construction and will be available soon.</p>
+    <button class="overlay-close" onclick="closePage()">Close</button>
   </div>
+</div>
 
-  <script>
-    function showPage(name) {
-      var overlay = document.getElementById('pageOverlay');
-      var msg = document.getElementById('overlayMessage');
-      msg.textContent = 'The "' + name + '" page is under construction and will be available soon. Check back shortly!';
-      overlay.classList.add('visible');
-      document.body.style.overflow = 'hidden';
-      document.querySelector('.overlay-close').focus();
+<script>
+  /* Hamburger toggle */
+  var hamburger = document.getElementById('hamburger');
+  var mainNav   = document.getElementById('main-nav');
+  hamburger.addEventListener('click', function() {
+    var isOpen = mainNav.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+
+  /* Coming-soon overlay */
+  function showPage(name) {
+    document.getElementById('overlayMessage').textContent =
+      'The "' + name + '" page is under construction and will be available soon. Check back shortly!';
+    document.getElementById('pageOverlay').classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    document.querySelector('.overlay-close').focus();
+  }
+  function closePage() {
+    document.getElementById('pageOverlay').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('pageOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closePage();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePage();
+  });
+
+  /* Email subscribe */
+  function handleSubscribe() {
+    var input = document.getElementById('email-input');
+    var email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address.');
+      return;
     }
-
-    function closePage() {
-      document.getElementById('pageOverlay').classList.remove('visible');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('pageOverlay').addEventListener('click', function(e) {
-      if (e.target === this) closePage();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closePage();
-    });
-
-    function handleSubscribe() {
-      var input = document.getElementById('email-input');
-      var email = input.value.trim();
-      if (!email || !email.includes('@')) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-      alert('Thank you! We\'ll keep you updated at ' + email);
-      input.value = '';
-    }
-  </script>
+    alert("Thank you! We'll keep you updated at " + email);
+    input.value = '';
+  }
+</script>
 
 </body>
 </html>
